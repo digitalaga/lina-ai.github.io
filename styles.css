@@ -22,10 +22,11 @@ body {
 
 #title-bar span {
   font-size: 1.5em;
+  color: #fff;
 }
 
 #title-bar button {
-  background-color: #1f77c7; /* Button color matching user message gradient */
+  background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
   color: #fff;
   border: none;
   padding: 8px 12px;
@@ -57,7 +58,7 @@ body {
 }
 
 .login-button {
-  background-color: #1f77c7; /* Button color matching user message gradient */
+  background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
   color: #fff;
   border: none;
   padding: 10px;
@@ -78,12 +79,13 @@ body {
 
 #chat-messages {
   padding: 20px;
-  overflow-y: scroll;
-  max-height: calc(100% - 60px);
+
+  max-height: calc(100% - 100%px);
 }
 
 .user-message,
 .bot-message {
+  font-weight: bold;
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -92,7 +94,7 @@ body {
 }
 
 .user-message {
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%); /* Gradient for user message */
+  background: linear-gradient(45deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%); /* Gradient for user message */
   align-self: flex-end;
   color: #fff;
 }
@@ -108,7 +110,6 @@ body {
   bottom: 0;
   width: 100%; /* Full width for better UI */
   display: flex;
-  padding: 10px;
   background-color: #111; /* Dark mode input container background color */
   z-index: 1; /* Ensure the input container is above the chat */
 }
@@ -116,7 +117,7 @@ body {
 .user-input {
   flex-grow: 1;
   padding: 8px;
-  margin-right: 10px;
+  margin-right: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   color: #fff; /* Dark mode input text color */
@@ -133,8 +134,9 @@ body {
 
 #speech-button,
 #send-button {
-  background-color: #1f77c7; /* Button color matching user message gradient */
+  background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%); /* Gradient for user message */
   color: #fff;
+  margin-right: 4px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -144,30 +146,18 @@ body {
   flex-shrink: 0; /* Prevent the button from shrinking and being cut off */
 }
 
-#title-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 99%;
-  padding: 10px;
-  background-color: #111;
+.message-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2; /* Ensure the title bar is above other elements */
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-#title {
-  color: #fff;
+.reaction-button {
+  cursor: pointer; 
+  border: 1px solid #3498db; 
+  border-radius: 15px;
+  background-color: transparent; 
 }
 
-#clear-chat-button {
-  background-color: #1f77c7;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
 img[src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"]{ display: none; }

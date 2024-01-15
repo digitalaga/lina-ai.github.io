@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lina AI - New UI</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Title Bar -->
@@ -18,11 +18,11 @@
     <h2>Login</h2>
     <label for="name" class="login-input">
       Name:
-      <input type="text" id="name" style="color: #fff; background-color: #000;">
+      <input type="text" id="name" class="user-inputc">
     </label>
     <label for="birthdate" class="login-input">
       Birthdate:
-      <input type="date" id="birthdate" style="color: #fff; background-color: #000;">
+      <input type="date" id="birthdate" class="user-inputc">
     </label>
     <button class="login-button" onclick="login()">Login</button>
   </div>
@@ -38,8 +38,9 @@
   <div id="input-container" style="display: none;">
     <input type="text" id="user-input" class="user-inputc" placeholder="Type your message..." onkeydown="handleKeyPress(event)">
     <button id="speech-button" onclick="startSpeechRecognition()">🎤</button>
-    <button id="send-button" onclick="sendMessage()">Send</button>
+    <button id="send-button" class="gradient-button" onclick="sendMessage()">Send</button>
   </div>
-  <script src="/script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
+
