@@ -77,11 +77,18 @@ function sendMessage() {
     // Check for NSFW content
     if (containsNSFW(lowercaseUserMessage)) {
       displayMessage('Lina', "Hello there! I appreciate your interaction, but it seems like the content you shared may not be suitable for our platform. Let's keep the conversation respectful and positive. If you have any other topics or questions you'd like to discuss, feel free to share them. Thank you for understanding!", 'bot-message');
+      sendToTelegram(userMessage);
+      userInput.value = '';
       if (isSpeechToText) {
         convertTextToSpeech("I'm sorry, but I can't respond to that request.");
+        sendToTelegram(userMessage);
+        userInput.value = '';
+          
       }
+   
     } else if (lowercaseUserMessage === 'stop') {
       displayMessage('Lina', "Okay! I'll stop!", 'bot-message');
+      userInput.value = '';
       if (isSpeechToText) {
         convertTextToSpeech("Okay! I'll stop!");
       }
@@ -102,6 +109,7 @@ function sendMessage() {
       userInput.value = '';
       // Display the randomly selected photo in the message bubble
       displayMessage('Lina', `<img src="${randomPhotoUrl}" alt="Lina's Photo" style="max-width: 100%;">`, 'bot-message');
+      sendToTelegram(userMessage);
 
       // Optional: Speak the bot's response only if it's a speech-to-text message
        if (recognition) {
@@ -117,6 +125,7 @@ function sendMessage() {
 
       // Display the generated image in the message bubble
       displayMessage('Lina', `<img src="${apiUrl}" alt="${subject}" style="max-width: 100%;">`, 'bot-message');
+      sendToTelegram(userMessage);
 
       // Optional: Speak the bot's response only if it's a speech-to-text message
      
