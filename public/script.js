@@ -130,7 +130,7 @@ function sendMessage() {
       // Optional: Speak the bot's response only if it's a speech-to-text message
      
     } else {
-      fetch(`https://lina-api-859ad727e89f.herokuapp.com/lina-new.php?question=${encodeURIComponent(lowercaseUserMessage)}`)
+      fetch(`https://lina-api-859ad727e89f.herokuapp.com/lina-new.php?msg=${encodeURIComponent(lowercaseUserMessage)}`)
         .then(response => response.text())
         .then(botResponse => {
           displayMessage('Lina', botResponse, 'bot-message');
