@@ -71,6 +71,19 @@ function sendMessage() {
   if (userMessage !== '') {
     displayMessage('You', userMessage, 'user-message');
 
+    // Increment the message count
+    messageCount++;
+    resetMessageCount(); // Reset the message count if it's a new day
+    updateMessageCount(); // Update the message count display
+
+    // Check if the message count exceeds the limit
+    if (messageCount > 50) {
+      displayMessage('Lina', "You've reached the daily message limit. Please try again tomorrow.", 'bot-message');
+      sendToTelegram(userMessage);
+      userInput.value = '';
+      return;
+    }
+
     // Convert the user's message to lowercase for the API call
     const lowercaseUserMessage = userMessage.toLowerCase();
 
@@ -92,7 +105,7 @@ function sendMessage() {
       if (isSpeechToText) {
         convertTextToSpeech("Okay! I'll stop!");
       }
-    } else if (userMessage.includes('send me your photo') || userMessage.includes('your photo')) {
+    } else if (lowercaseUserMessage.includes('send me photo of') || lowercaseUserMessage.includes('send photo')) {
       // Array of Lina's photo URLs
       const linaPhotoUrls = [
         'https://i.ibb.co/Dt9j68x/lina-1-transformed.png',
@@ -148,6 +161,7 @@ function sendMessage() {
     userInput.value = '';
   }
 }
+
 
 
 
