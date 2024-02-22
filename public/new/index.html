@@ -5,20 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lina AI - New UI</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
   <!-- Title Bar -->
   <div id="title-bar">
     <span id="title">Lina AI</span>
-    <div>
-    <button id="clear-chat-button" class="action-button" onclick="clearChat()">Clear Chat</button>
-    <span id="message-counter">0/50</span>
-	<p style="
-            background-color: transparent;
- 
-            width: 170px;"></p>
-    </div>
+    <button id="clear-chat-button" onclick="clearChat()">Clear Chat</button>
   </div>
 
   <!-- Login Container -->
@@ -44,12 +36,11 @@
     </div>
   </div>
   <div id="input-container" style="display: none;">
-      <input type="text" id="user-input" class="user-inputc" placeholder="Type your message..." onkeydown="handleKeyPress(event)">
-      <button id="speech-button" onclick="startSpeechRecognition()">🎤</button>
-      <button id="send-button" class="gradient-button" onclick="sendMessage()">Send</button>
-    </div>
-  <script src="./script.js"></script>
-
-   
+    <input type="text" id="user-input" class="user-inputc" placeholder="Type your message..." onkeydown="handleKeyPress(event)">
+    <button id="speech-button" onclick="startSpeechRecognition()">🎤</button>
+    <button id="send-button" class="gradient-button" onclick="sendMessage()">Send</button>
+    <span id="message-counter">0/50</span>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
