@@ -1,5 +1,27 @@
 let recognition;
 let user;
+let messageCount = 0;
+let lastDate = new Date().getDate(); // Initialize lastDate with the current date
+
+// Add this function to update and display the message count
+function updateMessageCount() {
+  const messageCounter = document.getElementById('message-counter');
+  messageCounter.textContent = `${messageCount}/50`;
+}
+
+// Add this function to check if it's a new day and reset the message count
+function resetMessageCount() {
+  const currentDate = new Date().getDate();
+  if (currentDate !== lastDate) {
+    messageCount = 0; // Reset the message count
+    lastDate = currentDate; // Update the last date
+    localStorage.setItem('lastDate', lastDate); // Store the last date in local storage
+  }
+  updateMessageCount(); // Update the message count display
+}
+
+// Call resetMessageCount() when the page loads
+window.onload = resetMessageCount;
 
 document.addEventListener('DOMContentLoaded', () => {
   const storedUser = localStorage.getItem('user');
