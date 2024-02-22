@@ -1,44 +1,70 @@
 let recognition;
 let user;
-// Add this code block at the top with other global variables
-let messageCount = 0;
-let lastDate = new Date().getDate(); // Initialize lastDate with the current date
 
-// Add this function to update and display the message count
-function updateMessageCount() {
-  const messageCounter = document.getElementById('message-counter');
-  messageCounter.textContent = `${messageCount}/50`;
-}
-
-// Add this function to check if it's a new day and reset the message count
-function resetMessageCount() {
-  const currentDate = new Date().getDate();
-  if (currentDate !== lastDate) {
-    messageCount = 0; // Reset the message count
-    lastDate = currentDate; // Update the last date
-    localStorage.setItem('lastDate', lastDate); // Store the last date in local storage
+document.addEventListener('DOMContentLoaded', () => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    user = JSON.parse(storedUser);
+    showChat();
   }
-  updateMessageCount(); // Update the message count display
+});
+
+function startSpeechRecognition() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Speech recognition is not supported in your browser.");
+        return;
+      }
+
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('user-input').value = transcript;
+        recognition.stop();
+      };
+
+      recognition.onend = function () {
+        recognition.stop();
+      };
+
+      recognition.start();
+    }
+
+
+function login() {
+  const nameInput = document.getElementById('name');
+  const birthdateInput = document.getElementById('birthdate');
+
+  const name = nameInput.value.trim();
+  const birthdate = birthdateInput.value.trim();
+
+  if (name !== '' && birthdate !== '') {
+    user = { name, birthdate };
+
+    // Save user details to localStorage
+    localStorage.setItem('user', JSON.stringify(user));
+
+    showChat();
+  }
 }
 
-// Call resetMessageCount() when the page loads
-window.onload = resetMessageCount;
+function showChat() {
+  document.querySelector('.login-container').style.display = 'none';
+  document.getElementById('chat-container').style.display = 'block';
+  document.getElementById('input-container').style.display = 'flex';
 
-// Modify the sendMessage() function to increment the message count and update the message count display
+  // Load stored chat messages
+  const storedChat = localStorage.getItem(getStorageKey());
+  if (storedChat) {
+    const chatMessages = document.getElementById('chat-messages');
+    chatMessages.innerHTML = storedChat;
+  }
+}
+
 function sendMessage() {
   const userInput = document.getElementById('user-input');
-  const userMessage = userInput.value.trim().toLowerCase();
-
-  if (userMessage !== '') {
-    messageCount++; // Increment the message count
-    resetMessageCount(); // Reset the message count if it's a new day
-
-    // Check if the message count exceeds the limit
-    if (messageCount > 50) {
-      displayMessage('Lina', "You've reached the daily message limit. Please try again tomorrow.", 'bot-message');
-      return;
-    }
- const userInput = document.getElementById('user-input');
   const userMessage = userInput.value.trim();
  
 
@@ -121,73 +147,7 @@ function sendMessage() {
     saveMessage('You', userMessage);
     userInput.value = '';
   }
-    // Rest of the code for sending messages...
 }
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const storedUser = localStorage.getItem('user');
-  if (storedUser) {
-    user = JSON.parse(storedUser);
-    showChat();
-  }
-});
-
-function startSpeechRecognition() {
-      if (!('webkitSpeechRecognition' in window)) {
-        alert("Speech recognition is not supported in your browser.");
-        return;
-      }
-
-      recognition = new webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-
-      recognition.onresult = function (event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('user-input').value = transcript;
-        recognition.stop();
-      };
-
-      recognition.onend = function () {
-        recognition.stop();
-      };
-
-      recognition.start();
-    }
-
-
-function login() {
-  const nameInput = document.getElementById('name');
-  const birthdateInput = document.getElementById('birthdate');
-
-  const name = nameInput.value.trim();
-  const birthdate = birthdateInput.value.trim();
-
-  if (name !== '' && birthdate !== '') {
-    user = { name, birthdate };
-
-    // Save user details to localStorage
-    localStorage.setItem('user', JSON.stringify(user));
-
-    showChat();
-  }
-}
-
-function showChat() {
-  document.querySelector('.login-container').style.display = 'none';
-  document.getElementById('chat-container').style.display = 'block';
-  document.getElementById('input-container').style.display = 'flex';
-
-  // Load stored chat messages
-  const storedChat = localStorage.getItem(getStorageKey());
-  if (storedChat) {
-    const chatMessages = document.getElementById('chat-messages');
-    chatMessages.innerHTML = storedChat;
-  }
-}
-
 
 
 
